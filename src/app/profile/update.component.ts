@@ -1,4 +1,4 @@
-﻿import { Component, OnInit } from '@angular/core';
+﻿﻿import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
@@ -8,7 +8,7 @@ import { MustMatch } from '@app/_helpers';
 
 @Component({ templateUrl: 'update.component.html' })
 export class UpdateComponent implements OnInit {
-    account = this.accountService.accountValue!;
+    account: any;
     form!: FormGroup;
     submitting = false;
     submitted = false;
@@ -23,6 +23,12 @@ export class UpdateComponent implements OnInit {
     ) { }
 
     ngOnInit() {
+        this.account = this.accountService.accountValue;
+        if (!this.account) {
+            this.router.navigate(['/']);
+            return;
+        }
+
         this.form = this.formBuilder.group({
             title: [this.account.title, Validators.required],
             firstName: [this.account.firstName, Validators.required],
@@ -50,7 +56,15 @@ export class UpdateComponent implements OnInit {
         }
 
         this.submitting = true;
-        this.accountService.update(this.account.id!, this.form.value)
+
+        // Prepare update data, exclude password if blank
+        const updateData = { ...this.form.value };
+        if (!updateData.password) {
+            delete updateData.password;
+            delete updateData.confirmPassword;
+        }
+
+        this.accountService.update(this.account.id!, updateData)
             .pipe(first())
             .subscribe({
                 next: () => {
@@ -71,6 +85,7 @@ export class UpdateComponent implements OnInit {
                 .pipe(first())
                 .subscribe(() => {
                     this.alertService.success('Account deleted successfully', { keepAfterRouteChange: true });
+                    this.router.navigate(['/']); // Navigate away after delete
                 });
         }
     }

@@ -30,7 +30,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="mb-3 col-7">
+        <div class="mb-3 col-4">
             <label class="form-label">Email</label>
             <input type="text" formControlName="email" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
             <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
@@ -38,15 +38,24 @@
                 <div *ngIf="f.email.errors.email">Email must be a valid email address</div>
             </div>
         </div>
-        <div class="mb-3 col-5">
+        <div class="mb-3 col-4">
             <label class="form-label">Role</label>
             <select formControlName="role" class="form-select" [ngClass]="{ 'is-invalid': submitted && f.role.errors }">
-                <option value=""></option>
                 <option value="User">User</option>
                 <option value="Admin">Admin</option>
             </select>
             <div *ngIf="submitted && f.role.errors" class="invalid-feedback">
                 <div *ngIf="f.role.errors.required">Role is required</div>
+            </div>
+        </div>
+        <div class="mb-3 col-4">
+            <label class="form-label">Status</label>
+            <select formControlName="status" class="form-select" [ngClass]="{ 'is-invalid': submitted && f.status.errors }">
+                <option value="Active">Active</option>
+                <option value="Inactive">Inactive</option>
+            </select>
+            <div *ngIf="submitted && f.status.errors" class="invalid-feedback">
+                <div *ngIf="f.status.errors.required">Status is required</div>
             </div>
         </div>
     </div>

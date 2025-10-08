@@ -10,7 +10,7 @@ import { Role } from '@app/_models';
 const accountsKey = 'angular-15-signup-verification-boilerplate-accounts';
 let accounts: any[] = JSON.parse(localStorage.getItem(accountsKey)!) || [];
 
-@Injectable()
+/*@Injectable()
 export class FakeBackendInterceptor implements HttpInterceptor {
     constructor(private alertService: AlertService) { }
 
@@ -389,4 +389,4 @@ export let fakeBackendProvider = {
     provide: HTTP_INTERCEPTORS,
     useClass: FakeBackendInterceptor,
     multi: true
-};
+}; */
